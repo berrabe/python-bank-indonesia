@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import mysql.connector
 import requests
 import time
 import tabulate
@@ -77,3 +78,30 @@ class bi():
 			print(tabulate.tabulate(self.list_uang, headers, tablefmt="pretty"))
 		except Exception as e:
 			logger.exception(f'SHOW TABLE Error { e }')
+
+	def send_db(self, host='localhost', user='root', password='root', database='bi'):
+		try:
+			logger.info("Send DB of Kurs Lists")
+
+			db = mysql.connector.connect(
+				host=host,
+				user=user,
+				password=password,
+				database=database
+			)
+
+			cur = db.cursor()
+
+			for i in self.list_uang: 
+
+				sql = f"""INSERT INTO `terbaru` 
+				(`No`, `Mata Uang`, `ABR`, `Nilai`, `Kurs Jual`, `Kurs Beli`) 
+				VALUES 
+				(NULL, '{i[0]}', '{i[1]}', '{i[2]}', '{i[3]}', '{i[4]}'); """
+
+				cur.execute(sql)
+
+			db.commit()
+
+		except Exception as e:
+			logger.exception(f'SEND DB ERROR { e }')

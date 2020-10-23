@@ -8,4 +8,5 @@ if __name__ == '__main__':
 						datefmt='%d-%b-%y %H:%M:%S')
 	
 	obj = mod_bi.bi('https://www.bi.go.id/id/moneter/informasi-kurs/transaksi-bi/Default.aspx')
-	obj.table()
+	# obj.table()
+	obj.send_db('localhost','root','berrabe','bi')
