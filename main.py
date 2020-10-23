@@ -1,4 +1,4 @@
-import mod_bi
+from src import *
 import logging
 
 if __name__ == '__main__':
