@@ -1,0 +1,34 @@
+version: '2.2'
+
+services:
+    mariaDB:
+        image: yobasystems/alpine-mariadb
+        container_name: mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=berrabe
+            - MYSQL_DATABASE=db_bi
+            - MYSQL_USER=user_bi
+            - MYSQL_PASSWORD=pass_bi
+        ports:
+            - 3306:3306
+        restart: unless-stopped
+        cpus: 0.5
+        mem_limit: 200M
+        memswap_limit: 200M
+
+
+    phpmyadmin:
+        image: mhzawadi/phpmyadmin
+        container_name: phpmyadmin
+        ports:
+            - 8080:80
+        environment:
+            - PMA_HOST=mariaDB
+        depends_on:
+            - mariaDB
+        restart: unless-stopped
+        cpus: 0.5
+        mem_limit: 200M
+        memswap_limit: 200M
+
+
